@@ -12,6 +12,8 @@
     <RepositoryUrl>https://github.com/duaneedwards/heroicons</RepositoryUrl>
     <Description>An unofficial library of Blazor Components for tailwindlabs' heroicons set.</Description>
     <Version>1.0.1</Version>
+    <PackageIcon>Logo.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
 
 
@@ -24,6 +26,14 @@
   <ItemGroup>
     <Folder Include="Solid\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="assets\Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
