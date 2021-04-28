@@ -4,16 +4,21 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <FileVersion>1.0.1.0</FileVersion>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <Authors>Duane Edwards</Authors>
-    <PackageProjectUrl>https://github.com/duaneedwards/heroicons</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/duaneedwards/heroicons</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</RepositoryUrl>
     <Description>An unofficial library of Blazor Components for tailwindlabs' heroicons set.</Description>
     <Version>1.0.1</Version>
     <PackageIcon>Logo.png</PackageIcon>
     <PackageIconUrl />
+    <PackageReleaseNotes />
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Heroicons Icons Tailwind TailwindCSS Blazor</PackageTags>
   </PropertyGroup>
 
 
