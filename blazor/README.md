@@ -34,7 +34,6 @@ Now each icon can be imported individually as a Blazor component:
   <BeakerIcon class="h-5 w-5 text-blue-500"/>
   <p>...</p>
 </div>
-}
 ```
 
 The 24x24 outline icons can be imported from `HeroIcons.Blazor.Outline`, and the 20x20 solid icons can be imported from `HeroIcons.Blazor.Solid`.
