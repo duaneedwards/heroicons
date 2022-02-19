@@ -12,7 +12,7 @@
 
 <p align="center">
     <a href="https://www.nuget.org/packages/HeroIcons.Blazor"><img src="https://img.shields.io/nuget/v/HeroIcons.Blazor?logo=nuget" alt="Latest Release"></a>
-    <a href="https://github.com/tailwindlabs/heroicons/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/heroicons.svg" alt="License"></a>
+    <a href="https://github.com/tailwindlabs/heroicons/blob/master/LICENSE"><img src="https://img.shields.io/github/license/duaneedwards/heroicons" alt="License"></a>
 </p>
 
 > ℹ️ This package's version is aligned with the [heroicons NPM package](https://www.npmjs.com/package/heroicons) so you always know which version you're using.
