@@ -42,6 +42,22 @@ Icons use an upper camel case naming convention and are always suffixed with the
 
 [Browse the full list of icon names on GitHub &rarr;](https://github.com/duaneedwards/heroicons/tree/master/blazor/Outline)
 
+## Publishing a new release
+
+Run ```npm run build-blazor``` in the root directory.
+
+Commit any changes generated under ```\blazor\Solid``` and ```\blazor\Outline```.
+
+Review the upstream react library via codesandbox to check if anything has changed in the svg output by the components and update if necessary.
+
+Open solution ```\blazor\HeroIcons.Blazor.sln```.
+
+Update version number in ```HeroIcons.Blazor.csproj``` to match the upstream npm release.
+
+Run a **Release** build.
+
+Upload to nuget.org manually with symbols package.
+
 ## License
 
 This library is MIT licensed.
