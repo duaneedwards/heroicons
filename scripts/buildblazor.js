@@ -5,7 +5,7 @@ const rimraf = promisify(require('rimraf'))
 
 let transform = {
   blazor: async (svg, componentName, format) => {
-    return `@inherits HeroIcons.Blazor.HeroIconBase\r\n\r\n${svg}`.replace('="currentColor">', '="currentColor" @attributes="AllOtherAttributes">')
+    return `@inherits HeroIcons.Blazor.HeroIconBase\r\n\r\n${svg}`.replace('aria-hidden="true">', 'aria-hidden="true" @attributes="AllOtherAttributes">')
   },
 }
 
