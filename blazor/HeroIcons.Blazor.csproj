@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</RepositoryUrl>
     <Description>An unofficial library of Blazor Components for tailwindlabs' heroicons set.</Description>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageIcon>Logo.png</PackageIcon>
     <PackageIconUrl />
     <PackageReleaseNotes />
