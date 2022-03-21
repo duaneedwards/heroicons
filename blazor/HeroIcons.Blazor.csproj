@@ -7,8 +7,8 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <FileVersion>1.0.5.0</FileVersion>
-    <AssemblyVersion>1.0.5.0</AssemblyVersion>
+    <FileVersion>1.0.6.0</FileVersion>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
     <Authors>Duane Edwards</Authors>
     <PackageProjectUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/duaneedwards/heroicons/tree/master/blazor</RepositoryUrl>
