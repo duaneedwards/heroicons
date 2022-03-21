@@ -5,10 +5,11 @@ const rimraf = promisify(require('rimraf'))
 const svgr = require('@svgr/core').default
 const babel = require('@babel/core')
 const { compile: compileVue } = require('@vue/compiler-dom')
+const { dirname } = require('path')
 
 let transform = {
   react: async (svg, componentName, format) => {
-    let component = await svgr(svg, {}, { componentName })
+    let component = await svgr(svg, { ref: true }, { componentName })
     let { code } = await babel.transformAsync(component, {
       plugins: [[require('@babel/plugin-transform-react-jsx'), { useBuiltIns: true }]],
     })
@@ -70,13 +71,20 @@ function exportAll(icons, format, includeExtension = true) {
     .join('\n')
 }
 
+async function ensureWrite(file, text) {
+  await fs.mkdir(dirname(file), { recursive: true })
+  await fs.writeFile(file, text, 'utf8')
+}
+
+async function ensureWriteJson(file, json) {
+  await ensureWrite(file, JSON.stringify(json, null, 2))
+}
+
 async function buildIcons(package, style, format) {
   let outDir = `./${package}/${style}`
   if (format === 'esm') {
     outDir += '/esm'
   }
-
-  await fs.mkdir(outDir, { recursive: true })
 
   let icons = await getIcons(style)
 
@@ -86,43 +94,46 @@ async function buildIcons(package, style, format) {
       let types =
         package === 'react'
           ? `import * as React from 'react';\ndeclare function ${componentName}(props: React.ComponentProps<'svg'>): JSX.Element;\nexport default ${componentName};\n`
-          : `import { RenderFunction } from 'vue';\ndeclare const ${componentName}: RenderFunction;\nexport default ${componentName};\n`
+          : `import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';\ndeclare const ${componentName}: FunctionalComponent<HTMLAttributes & VNodeProps>;\nexport default ${componentName};\n`
 
       return [
-        fs.writeFile(`${outDir}/${componentName}.js`, content, 'utf8'),
-        ...(types ? [fs.writeFile(`${outDir}/${componentName}.d.ts`, types, 'utf8')] : []),
+        ensureWrite(`${outDir}/${componentName}.js`, content),
+        ...(types ? [ensureWrite(`${outDir}/${componentName}.d.ts`, types)] : []),
       ]
     })
   )
 
-  await fs.writeFile(`${outDir}/index.js`, exportAll(icons, format), 'utf8')
+  await ensureWrite(`${outDir}/index.js`, exportAll(icons, format))
 
-  await fs.writeFile(`${outDir}/index.d.ts`, exportAll(icons, 'esm', false), 'utf8')
+  await ensureWrite(`${outDir}/index.d.ts`, exportAll(icons, 'esm', false))
 }
 
-function main(package) {
+async function main(package) {
+  const cjsPackageJson = { module: './esm/index.js', sideEffects: false }
+  const esmPackageJson = { type: 'module', sideEffects: false }
+
   console.log(`Building ${package} package...`)
 
-  Promise.all([rimraf(`./${package}/outline/*`), rimraf(`./${package}/solid/*`)])
-    .then(() =>
-      Promise.all([
-        buildIcons(package, 'solid', 'esm'),
-        buildIcons(package, 'solid', 'cjs'),
-        buildIcons(package, 'outline', 'esm'),
-        buildIcons(package, 'outline', 'cjs'),
-        fs.writeFile(`./${package}/outline/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
-        fs.writeFile(`./${package}/outline/esm/package.json`, `{"type": "module"}`, 'utf8'),
-        fs.writeFile(`./${package}/solid/package.json`, `{"module": "./esm/index.js"}`, 'utf8'),
-        fs.writeFile(`./${package}/solid/esm/package.json`, `{"type": "module"}`, 'utf8'),
-      ])
-    )
-    .then(() => console.log(`Finished building ${package} package.`))
+  await Promise.all([rimraf(`./${package}/outline/*`), rimraf(`./${package}/solid/*`)])
+
+  await Promise.all([
+    buildIcons(package, 'solid', 'esm'),
+    buildIcons(package, 'solid', 'cjs'),
+    buildIcons(package, 'outline', 'esm'),
+    buildIcons(package, 'outline', 'cjs'),
+    ensureWriteJson(`./${package}/outline/package.json`, cjsPackageJson),
+    ensureWriteJson(`./${package}/outline/esm/package.json`, esmPackageJson),
+    ensureWriteJson(`./${package}/solid/package.json`, cjsPackageJson),
+    ensureWriteJson(`./${package}/solid/esm/package.json`, esmPackageJson),
+  ])
+
+  return console.log(`Finished building ${package} package.`)
 }
 
 let [package] = process.argv.slice(2)
 
 if (!package) {
-  throw Error('Please specify a package')
+  throw new Error('Please specify a package')
 }
 
 main(package)
